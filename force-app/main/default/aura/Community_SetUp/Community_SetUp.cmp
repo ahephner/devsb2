@@ -1,0 +1,64 @@
+<!--
+Change Log: 
+03 April 2020
+Removing ProfileId from recordEditForm 
+<lightning:inputField fieldName="ProfileId" class="slds-hide" value="{!v.profileId}"  />
+
+Seems to throw a not available in one.app error which is causing issues when viewing the contact
+Adding better error handling and messaging
+Updating buttons to add previous
+-->
+<aura:component implements="lightning:availableForFlowScreens" access="global">
+    <aura:attribute name="contactRecord" type="Object" default="null" />
+    <aura:attribute name="recordLoadError" type="String"/>
+    <aura:attribute name="contactId" type="String"/>
+    <aura:attribute name="userId" type="String"/>
+    <aura:attribute name="profileId" type="String"/>
+    <aura:attribute name="UserSObject" type="User"/>
+    <aura:attribute name="ProfileName" type="String" /> <!-- Read only text for profile and retrieved from metadata setup --> 
+    <aura:attribute name="display" type="Boolean" default="false" />
+    <aura:attribute name="fieldList" type="Aura.Component[]" />  
+    <aura:attribute name="errorMessage" type="String"/>
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.contactId}"
+                      fields="FirstName,LastName,Phone,Email"
+                      targetFields="{!v.contactRecord}"
+                      targetError="{!v.recordLoadError}"
+                      recordUpdated="{!c.contactLoaded}"
+                      />
+    <aura:if isTrue="{!v.contactRecord != null }"><!-- contact is loaded-->
+        <lightning:recordEditForm   aura:id="userEditForm"              
+                                  objectApiName="User"
+                                  onsuccess="{!c.onSuccess}" 
+                                  onsubmit="{!c.handleSubmit}"
+                                  onerror="{!c.logError}" 
+                                  recordId="{!v.userId}">
+            <!-- the messages component is for error messages -->
+            <lightning:messages />
+            <lightning:layout class="slds-wrap ">
+                <aura:iteration items="{!v.fieldList}" var="component">
+                    <lightning:layoutItem size="12">
+                        {!component}
+                    </lightning:layoutItem>
+                </aura:iteration>
+            </lightning:layout>
+            <lightning:layout class="slds-wrap ">
+                <lightning:layoutItem size="12">
+                    <!-- Were only going to display the label and not store the id -->
+                    <lightning:input type="text" label="Profile" value="{!v.ProfileName}"  disabled="true" variant="label-inline"/> 
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" class="button-grid">
+                    <div class="slds-m-top_medium slds-align_absolute-center">
+                        <lightning:button  variant="neutral"  name="Previous"  label="Previous" onclick="{!c.onPrevious}" />
+                        <lightning:button type="submit" variant="brand"  name="Next"  label="Next" /> 
+                    </div>
+                </lightning:layoutItem>
+            </lightning:layout>
+            <lightning:accordion aura:id="errorMessageAccordion" activeSectionName="errorMessageSection" class="slds-hide">
+                <lightning:accordionSection name="errorMessageSection" label="Error Message">
+                        <lightning:textarea value="{!v.errorMessage}" disabled="true" />
+                </lightning:accordionSection>
+            </lightning:accordion>
+        </lightning:recordEditForm>    
+    </aura:if> 
+</aura:component>

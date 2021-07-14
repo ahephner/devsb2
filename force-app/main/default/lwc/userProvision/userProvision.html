@@ -1,0 +1,23 @@
+<template>
+    <lightning-card title="Provision User" icon-name="standard:contact">
+        <div class='slds-var-m-around_medium'>
+            <!-- <lightning-record-form
+                object-api-name={userObj}
+                fields={fields}>
+            </lightning-record-form> -->
+            <lightning-record-edit-form
+                object-api-name={userObj}
+            >
+            <lightning-layout multiple-rows class="slds-wrap ">
+                <template  for:each={fieldInputs} for:item="fi" for:index="index">
+                    <lightning-layout-item key={fi.fieldName} size="12" padding="around-small"  >
+                        <lightning-input type={fi.type} value={fi.value} variant="standard" name={fi.id} label={fi.fieldName}></lightning-input>
+                    </lightning-layout-item >
+                </template>
+
+            
+            </lightning-layout>
+            </lightning-record-edit-form>
+        </div>
+    </lightning-card>
+</template>
