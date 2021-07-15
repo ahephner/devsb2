@@ -5,19 +5,36 @@
                 object-api-name={userObj}
                 fields={fields}>
             </lightning-record-form> -->
-            <lightning-record-edit-form
-                object-api-name={userObj}
-            >
+
             <lightning-layout multiple-rows class="slds-wrap ">
-                <template  for:each={fieldInputs} for:item="fi" for:index="index">
-                    <lightning-layout-item key={fi.fieldName} size="12" padding="around-small"  >
-                        <lightning-input type={fi.type} value={fi.value} variant="standard" name={fi.id} label={fi.fieldName}></lightning-input>
+                <template if:true={contact}>
+                    <lightning-layout-item size="12" padding="around-small">
+                        <lightning-input  value={firstName} variant="standard"  label='First Name'></lightning-input>
+                    </lightning-layout-item >
+                    <lightning-layout-item  size="12" padding="around-small">
+                        <lightning-input  value={lastName} variant="standard"  label='Last Name'></lightning-input>
+                    </lightning-layout-item >
+                    <lightning-layout-item  size="12" padding="around-small">
+                        <lightning-input  value={company} variant="standard"  label='Company'></lightning-input>
+                    </lightning-layout-item >
+                    <lightning-layout-item  size="12" padding="around-small">
+                        <lightning-input  value={email} variant="standard"  label='Email'></lightning-input>
+                    </lightning-layout-item >
+                    <lightning-layout-item  size="12" padding="around-small"  >
+                        <lightning-input  value={userName} variant="standard"  label='Username'></lightning-input>
+                    </lightning-layout-item >
+                    <lightning-layout-item  size="12" padding="around-small"  >
+                        <lightning-input  value={phone} variant="standard"  label='Phone'></lightning-input>
+                    </lightning-layout-item >
+                    <lightning-layout-item  size="12" padding="around-small"  >
+                        <lightning-input  value={alias} variant="standard"  label='Alias'></lightning-input>
+                    </lightning-layout-item >
+                    <lightning-layout-item  size="12" padding="around-small"  >
+                        <lightning-input  value={nickName} variant="standard"  label='Nickname'></lightning-input>
                     </lightning-layout-item >
                 </template>
-
-            
             </lightning-layout>
-            </lightning-record-edit-form>
+            
         </div>
     </lightning-card>
 </template>
