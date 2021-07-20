@@ -31,6 +31,7 @@ export default class UserProvision extends LightningElement {
     nickName;
     phone; 
     alias;
+    errorMessage;
 
     //fields = [FIRST_NAME, LAST_NAME, EMAIL, USERNME, COMNICK, TIME, LOCATION, EMAILENCODE, ALIAS, LANG, ACTIVE]; 
 
@@ -46,7 +47,7 @@ export default class UserProvision extends LightningElement {
             if(data){
                this.contact = data
                this.copy = this.contact; 
-               //console.log(this.contact);
+               console.log(this.copy);
                  this.firstName = this.copy.FirstName;
                  this.lastName = this.copy.LastName;
                  this.email = this.copy.Email;
@@ -55,8 +56,7 @@ export default class UserProvision extends LightningElement {
                  this.phone = this.copy.Phone; 
                  this.alias = this.copy.FirstName.substring(0,1) + this.copy.LastName.substring(0,8);
                  this.nickName = this.firstName +" "+ this.lastName
-                console.log(this.firstName)
-               console.log(typeof this.copy.LastName)
+
             }else if(error){
                 this.error = JSON.stringify(error);
                 console.log(error); 
