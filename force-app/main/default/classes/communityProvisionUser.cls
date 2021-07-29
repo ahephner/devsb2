@@ -1,6 +1,6 @@
 public class communityProvisionUser {
 
-    @AuraEnabled(Cacheable=true)
+    @AuraEnabled
     public static contact getContact(string id){
         contact con = [select id, email, firstname, lastname, phone, company_name__c from contact where id = :id limit 1];
         system.debug(con);
