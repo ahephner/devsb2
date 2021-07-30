@@ -1,40 +1,42 @@
 <template>
     <lightning-card title="Provision User" icon-name="standard:contact">
         <div class='slds-var-m-around_medium'>
-            <!-- <lightning-record-form
-                object-api-name={userObj}
-                fields={fields}>
-            </lightning-record-form> -->
+            <template if:false={loaded}>
+                <div class="exampleHolder">
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </div>
+            </template>
             <template if:true={errorMessage}>
                 {errorMessage}
             </template>
+            <template if:true={loaded}>
             <lightning-layout multiple-rows class="slds-wrap ">
-                <template if:true={contact}>
+                
                     <lightning-layout-item size="12" padding="around-small">
                         <lightning-input  value={firstName} variant="standard"  label='First Name' onchange={handleFName}></lightning-input>
                     </lightning-layout-item >
                     <lightning-layout-item  size="12" padding="around-small">
-                        <lightning-input  value={lastName} variant="standard"  label='Last Name' onchange={handleLName}></lightning-input>
+                        <lightning-input  value={lastName} variant="standard"  label='Last Name' onchange={handleLName} required></lightning-input>
                     </lightning-layout-item >
                     <lightning-layout-item  size="12" padding="around-small">
-                        <lightning-input  value={company} variant="standard"  label='Company' onchange={handleCompany}></lightning-input>
+                        <lightning-input  value={company} variant="standard"  label='Company' readonly></lightning-input>
                     </lightning-layout-item >
                     <lightning-layout-item  size="12" padding="around-small">
-                        <lightning-input  value={email} type='email' variant="standard"  label='Email' onchange={handleEmail}></lightning-input>
+                        <lightning-input  value={email} type='email' variant="standard"  label='Email' onchange={handleEmail} required></lightning-input>
                     </lightning-layout-item >
                     <lightning-layout-item  size="12" padding="around-small"  >
-                        <lightning-input  value={userName} type='email' variant="standard"  label='Username' onchange={handleUsername}></lightning-input>
+                        <lightning-input  value={userName} type='email' variant="standard"  label='Username' onchange={handleUsername} required></lightning-input>
                     </lightning-layout-item >
                     <lightning-layout-item  size="12" padding="around-small"  >
                         <lightning-input  value={phone} variant="standard"  label='Phone' onchange={handlePhone}></lightning-input>
                     </lightning-layout-item >
                     <lightning-layout-item  size="12" padding="around-small"  >
-                        <lightning-input  value={alias} variant="standard"  label='Alias Max 8 Characters' onchange={handleAlias}></lightning-input>
+                        <lightning-input  value={alias} variant="standard"  label='Alias Max 8 Characters' onchange={handleAlias} maxlength="8" required></lightning-input>
                     </lightning-layout-item >
                     <lightning-layout-item  size="12" padding="around-small"  >
                         <lightning-input  value={nickName} variant="standard"  label='Nickname' onchange={handleNickname}></lightning-input>
                     </lightning-layout-item >
-                </template>
+                
             </lightning-layout>
             <div class="footer slds-align_absolute-center">
                 <lightning-button variant="destructive" label="Cancel" 
@@ -45,6 +47,7 @@
                                   class="slds-m-left_x-small"></lightning-button>
                 <!-- <button type="button" onclick={prodInfo} class="slds-button slds-button_brand">prod info</button> -->
             </div>
+        </template>
         </div>
     </lightning-card>
 </template>
