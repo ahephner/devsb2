@@ -41,9 +41,9 @@ public class test_communitProvisionUser {
         	x.contactId = conId; 
        
         test.startTest();
-        	user cu = communityProvisionUser.insertUser(x);
+        	string cu = communityProvisionUser.insertUser(x);
         test.stopTest();
-        system.assertEquals(null, cu); 
+        system.assertEquals('Success', cu); 
         
     }
 }

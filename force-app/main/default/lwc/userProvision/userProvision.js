@@ -32,36 +32,30 @@ export default class UserProvision extends LightningElement {
     phone; 
     alias;
     errorMessage;
+    loaded = true; 
 
     //fields = [FIRST_NAME, LAST_NAME, EMAIL, USERNME, COMNICK, TIME, LOCATION, EMAILENCODE, ALIAS, LANG, ACTIVE]; 
 
     connectedCallback(){
-        console.log('profileId and name');
-        console.log(this.profileId + ' '+ this.profileName);
-        console.log('recordId');
-        console.log(this.contactId);
- 
-    }
-    @wire(getContact, {id: '$contactId'})
-        wiredContact({data, error}){
-            if(data){
-               this.contact = data
-               this.copy = this.contact; 
-               console.log(this.copy);
-                 this.firstName = this.copy.FirstName;
-                 this.lastName = this.copy.LastName;
-                 this.email = this.copy.Email;
-                 this.userName = this.copy.Email; 
-                 this.company = this.copy.Company_Name__c;
-                 this.phone = this.copy.Phone; 
-                 this.alias = this.copy.FirstName.substring(0,1) + this.copy.LastName.substring(0,8);
-                 this.nickName = this.firstName +" "+ this.lastName
 
-            }else if(error){
-                this.error = JSON.stringify(error);
-                console.log(error); 
-            }
-    }  
+        this.loadUser();
+    }
+
+    loadUser(){
+        getContact({id: this.contactId})
+        .then((result)=>{
+            this.loaded = true;  
+            this.firstName = result.FirstName;
+            this.lastName = result.LastName;
+            this.email = result.Email;
+            this.userName = result.Email; 
+            this.company = result.Account.Name;
+            this.phone = result.Phone; 
+            this.alias = result.FirstName.substring(0,1) + result.LastName.substring(0,5);
+            this.nickName = this.firstName +" "+ this.lastName
+            
+        })
+    }
 
     handleFName(e){
         this.firstName = e.detail.value;       
@@ -69,9 +63,7 @@ export default class UserProvision extends LightningElement {
     handleLName(e){
         this.lastName = e.detail.value;
     }
-    handleCompany(e){
-        this.company = e.detail.value;
-    }
+
     handleEmail(e){
         this.email = e.detail.value;
     }
@@ -89,6 +81,11 @@ export default class UserProvision extends LightningElement {
     }
 
     save(){
+        if(this.email === undefined || this.userName === undefined){
+            alert('Email and UserName Required');
+            return; 
+        }
+        this.loaded = false; 
         let params ={
             fName : this.firstName,
             lName: this.lastName,
@@ -101,11 +98,18 @@ export default class UserProvision extends LightningElement {
             profileId : this.profileId,
             contactId: this.contactId
         }
+        
         insertUser({wrapper:params})
             .then((resp)=>{
-                console.log('rep '+resp);
-                const next = FlowNavigationNextEvent();
-                this.dispatchEvent(next); 
+                if(resp === 'Success'){
+                    const next = FlowNavigationNextEvent();
+                    this.dispatchEvent(next); 
+                    this.loaded = true; 
+                }else if(resp != 'Success'){
+                    this.errorMessage = resp;
+                    this.loaded = true; 
+                }
+
             }).catch((error)=>{
                 console.log(JSON.stringify(error))
                 let message = 'Unknown error';
@@ -125,3 +129,24 @@ export default class UserProvision extends LightningElement {
         }
     
 }
+
+// @wire(getContact, {id: '$contactId'})
+//         wiredContact({data, error}){
+//             if(data){
+//                this.contact = data
+//                this.copy = this.contact; 
+//                console.log(this.copy);
+//                  this.firstName = this.copy.FirstName;
+//                  this.lastName = this.copy.LastName;
+//                  this.email = this.copy.Email;
+//                  this.userName = this.copy.Email; 
+//                  this.company = this.copy.Company_Name__c;
+//                  this.phone = this.copy.Phone; 
+//                  this.alias = this.copy.FirstName.substring(0,1) + this.copy.LastName.substring(0,8);
+//                  this.nickName = this.firstName +" "+ this.lastName
+
+//             }else if(error){
+//                 this.error = JSON.stringify(error);
+//                 console.log(error); 
+//             }
+//     }  

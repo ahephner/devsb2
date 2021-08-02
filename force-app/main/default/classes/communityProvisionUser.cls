@@ -1,13 +1,15 @@
-public class communityProvisionUser {
+public without sharing class communityProvisionUser {
 
-    @AuraEnabled(Cacheable=true)
+
+    @AuraEnabled
     public static contact getContact(string id){
-        contact con = [select id, email, firstname, lastname, phone, company_name__c from contact where id = :id limit 1];
+        contact con = [select id, email, firstname, lastname, phone, Account.Name from contact where id = :id limit 1];
         system.debug(con);
         return con; 
     }
     @AuraEnabled
-    public static user insertUser(communityWrapper wrapper){
+    public static string insertUser(communityWrapper wrapper){
+        string mess;  
         User newUser = new User(
             firstName = wrapper.fName,
             lastName = wrapper.lName,
@@ -25,11 +27,13 @@ public class communityProvisionUser {
 			TimeZoneSidKey = 'America/New_York'
         );
         try{
-        	insert newUser;     
+        	insert newUser; 
+            mess = 'Success';
         }catch(exception e){
             system.debug(e);
+            mess = String.valueOf(e); 
         }
         
-        return null; 
+        return mess; 
     }
 }
