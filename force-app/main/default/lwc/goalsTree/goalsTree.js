@@ -7,13 +7,17 @@ export default class GoalsTree extends LightningElement {
     @track july = []
     @track aug = []
     @track sept = []
+    @track allData= [];
+    loaded = false;
     connectedCallback(){
         console.log(this.user)
     }
     @wire(getGoals, { userId: '$user' })
     wiredData({ error, data }) {
       if (data) {
+        this.allData = data; 
         this.handleData(data)
+        this.loaded = true; 
       } else if (error) {
          console.error('Error:', error);
       }

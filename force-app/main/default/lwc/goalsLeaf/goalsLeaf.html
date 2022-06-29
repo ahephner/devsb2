@@ -1,7 +1,7 @@
 <template>
     <!-- taken straight from SLDS -->
     <th data-label="Name" scope="row">
-      <div class="slds-truncate" title={row.Name}>{row.Name}</div>
+      <div class="slds-truncate" title={row.Id}>{row.Id}</div>
     </th>
     <td data-label="Some Custom Column">
       <div class="slds-truncate">
@@ -11,7 +11,7 @@
           variant="label-hidden"
           name="inputForDataField"
           onchange={handleOnChange}
-          value={row.Data_Field__c}>
+          value={row.Prev_Qty__c}>
         </lightning-input>
       </div>
     </td>

@@ -1,38 +1,90 @@
 <template>
-    <lightning-card  variant="Narrow"  title="Hello" icon-name="standard:account">
-        <lightning-button variant="base" label="check" title="Check" onclick={check}></lightning-button>
-        <div class="container">
-        <lightning-layout multiple-rows>
-            <lightning-layout-item size="2" padding="around-small">
-                <div class="page-section page-right">July</div>
-            </lightning-layout-item>
-            <lightning-layout-item size="10" padding="around-small">
-                <div class="page-section page-main sales">
-                    <template for:each={july} for:item='j'>
-                        <ul class='line' key={j.id}>
-                            <li>{j.Name}</li>
-                            <li>{j.Product__r.Product_Name__c}</li>
-                            <li>${j.Actual_Amount__c}</li>
-                            <li>{j.Prev_Qty__c}</li>
-                            <li><lightning-input type="number" variant="standard" name="name" label=""></lightning-input></li>
-                            <li><p>will be final</p></li>
-                        </ul>
-                    </template>
-                </div>
-            </lightning-layout-item>
-            <lightning-layout-item size="2" padding="around-small">
-                <div class="page-section page-right">August</div>
-            </lightning-layout-item>
-            <lightning-layout-item size="10" padding="around-small">
-                <div class="page-section page-main sales"></div>
-            </lightning-layout-item>
-            <lightning-layout-item size="2" padding="around-small">
-                <div class="page-section page-right">September</div>
-            </lightning-layout-item>
-            <lightning-layout-item size="10" padding="around-small">
-                <div class="page-section page-main sales"></div>
-            </lightning-layout-item>
-        </lightning-layout>
-    </div>
+    <lightning-card  variant="Narrow"  title="MC Forecast" icon-name="standard:account">
+        <div class="slds-grid">
+        <div class="slds-col slds-size_1-of-12 edgeColor">
+            August
+        </div>
+        <table class="slds-table slds-table_bordered slds-border_left slds-border_right slds-col slds-size_11-of-12">
+            <thead>
+              <tr class="slds-line-height_reset">
+                <th class="" scope="col">
+                  <div class="slds-truncate" title="Name">Name</div>
+                </th>
+                <th class="" scope="col">
+                  <div class="slds-truncate" title="Some Custom Column">Product</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Some Custom Column">Prev Sales</div>
+                  </th>
+                  <th class="" scope="col">
+                    <div class="slds-truncate" title="Some Custom Column">Prev QTY</div>
+                  </th>
+                  <th class="" scope="col">
+                    <div class="slds-truncate" title="Some Custom Column">% Change</div>
+                  </th>
+                  <th class="" scope="col">
+                    <div class="slds-truncate" title="Some Custom Column">New Forecast</div>
+                  </th>
+              </tr>
+            </thead>
+            <tbody>
+                <template if:true={loaded}>
+              <template for:each={allData} for:item="row">
+                <tr key={row.Id}>
+                    <td data-label="Some Custom Column">
+                        <div class="slds-truncate">
+                          <p>{row.Name}</p>
+                        </div>
+                      </td>
+                      <td data-label="Some Custom Column">
+                        <div class="slds-truncate">
+                          <p>
+                            {row.Product__r.Product_Name__c}
+                        </p>
+                        </div>
+                      </td>
+                      <td data-label="Some Custom Column">
+                        <div class="slds-truncate">
+                          <span>${row.Actual_Amount__c}</span>
+                        </div>
+                      </td>
+                      <td data-label="Some Custom Column">
+                        <div class="slds-truncate">
+                          <span>{row.Prev_Qty__c}</span>
+                        </div>
+                      </td>
+                      <td data-label="Some Custom Column">
+                        <div class="slds-truncate">
+                          <lightning-input
+                            data-id={row.Id}
+                            type="number"
+                            variant="label-hidden"
+                            name="inputForDataField"
+                            onchange={handleOnChange}
+                            value={row.Percent_Change__c}>
+                          </lightning-input>
+                        </div>
+                      </td>
+                      <td data-label="Some Custom Column">
+                        <div class="slds-truncate">
+                          <lightning-input
+                            data-id={row.Id}
+                            type="number"
+                            variant="label-hidden"
+                            name="inputForDataField"
+                            onchange={handleOnChange}
+                            value=''>
+                          </lightning-input>
+                        </div>
+                      </td>
+                    </tr>
+              </template>
+            </template>
+            <template if:false={loaded}>
+                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+            </template>
+            </tbody>
+          </table>
+        </div>
     </lightning-card>
 </template>

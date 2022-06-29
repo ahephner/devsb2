@@ -2,3 +2,7 @@
     display: flex;
     border: .3px solid black ;
 }
+
+.edgeColor{
+    background-color: rgba(243,243,243);
+}

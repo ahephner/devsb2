@@ -1,3 +1,5 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, api } from 'lwc';
 
-export default class GoalsLeaf extends LightningElement {}
+export default class GoalsLeaf extends LightningElement {
+    @api rows; 
+}
