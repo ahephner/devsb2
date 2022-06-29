@@ -1,0 +1,38 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Hello" icon-name="standard:account">
+        <lightning-button variant="base" label="check" title="Check" onclick={check}></lightning-button>
+        <div class="container">
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="2" padding="around-small">
+                <div class="page-section page-right">July</div>
+            </lightning-layout-item>
+            <lightning-layout-item size="10" padding="around-small">
+                <div class="page-section page-main sales">
+                    <template for:each={july} for:item='j'>
+                        <ul class='line' key={j.id}>
+                            <li>{j.Name}</li>
+                            <li>{j.Product__r.Product_Name__c}</li>
+                            <li>${j.Actual_Amount__c}</li>
+                            <li>{j.Prev_Qty__c}</li>
+                            <li><lightning-input type="number" variant="standard" name="name" label=""></lightning-input></li>
+                            <li><p>will be final</p></li>
+                        </ul>
+                    </template>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="2" padding="around-small">
+                <div class="page-section page-right">August</div>
+            </lightning-layout-item>
+            <lightning-layout-item size="10" padding="around-small">
+                <div class="page-section page-main sales"></div>
+            </lightning-layout-item>
+            <lightning-layout-item size="2" padding="around-small">
+                <div class="page-section page-right">September</div>
+            </lightning-layout-item>
+            <lightning-layout-item size="10" padding="around-small">
+                <div class="page-section page-main sales"></div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+    </lightning-card>
+</template>

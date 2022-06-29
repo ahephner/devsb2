@@ -1,0 +1,19 @@
+<template>
+    <!-- taken straight from SLDS -->
+    <th data-label="Name" scope="row">
+      <div class="slds-truncate" title={row.Name}>{row.Name}</div>
+    </th>
+    <td data-label="Some Custom Column">
+      <div class="slds-truncate">
+        <lightning-input
+          data-id={row.Id}
+          type="number"
+          variant="label-hidden"
+          name="inputForDataField"
+          onchange={handleOnChange}
+          value={row.Data_Field__c}>
+        </lightning-input>
+      </div>
+    </td>
+    <!-- more tds .... -->
+  </template>
