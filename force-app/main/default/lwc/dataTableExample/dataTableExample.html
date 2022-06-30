@@ -1,0 +1,65 @@
+<template>
+    
+    
+                    <lightning-card  variant="Narrow">
+                        <h5><b>Number of Products Selected: {productsSelected}</b></h5>
+                        <h2>THIS IS AN EXAMPLE ONLY</h2>
+                    <template if:false={loaded}>
+                        <lightning-spinner 
+                            alternative-text="Loading" 
+                            size="large"></lightning-spinner>
+                    </template>
+                    <template if:true={loaded}> 
+                        <div class="slds-grid">
+                            <div class='slds-col slds-size_3-of-8'>
+                                <lightning-input type="text" variant="standard" 
+                                                name="name" label="Product" 
+                                                placeholder="Search for products.."
+                                                onchange={nameChange}
+                                                onkeydown={handleKey}></lightning-input>
+                            </div>
+                            <div class='slds-col slds-size_2-of-8'>
+                                <lightning-combobox
+                                    name="prodFamily"
+                                    label="Product Family"
+                                    value={pf}
+                                    placeholder="Product Family"
+                                    options={pfOptions}
+                                    onchange={pfChange} ></lightning-combobox>
+                            </div> 
+                            <div class='slds-col slds-size_2-of-8'>
+                                <lightning-combobox
+                                name="cat"
+                                label="Category"
+                                value={cat}
+                                placeholder="Product Category"
+                                options={catOptions}
+                                onchange={catChange} ></lightning-combobox>
+                            </div>
+                            <div class='slds-col slds-size_1-of-8 slds-m-top_large slds-m-left_small'>   
+                                <lightning-button variant="brand" label="Search" title="Search" onclick={search}></lightning-button>
+                            </div>
+                        </div>
+                        <div class="slds-scrollable_y" style="height:40rem;width:100%">
+                        <div class='slds-grid'>
+                            <div class='slds-col'>
+                                <lightning-datatable
+                                    key-field="Id"
+                                    data={prod}
+                                    hide-checkbox-column
+                                    columns={columnsList}
+                                    sorted-by={sortBy}
+                                    sorted-direction={sortDirection}
+                                    onsort={handleSortdata}
+                                    onrowaction={handleRowAction}>
+                                </lightning-datatable>
+                            </div>
+                            </div>
+                        </div>             
+                    </template>
+                    </lightning-card>
+
+
+
+
+</template>
