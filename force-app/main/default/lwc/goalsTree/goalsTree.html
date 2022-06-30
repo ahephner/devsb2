@@ -1,10 +1,13 @@
 <template>
-    <lightning-card  variant="Narrow"  title="MC Forecast" icon-name="standard:account">
-        <div class="slds-grid">
-        <div class="slds-col slds-size_1-of-12 edgeColor">
+  <lightning-card  variant="Narrow"  title="MC Forecast" icon-name="standard:account">
+      <template if:true={formSize}>
+        <div class={flexipageRegionWidth}>
+        <div class="slds-grid " >
+        <!-- <div class="slds-col slds-size_1-of-12 edgeColor">
             August
-        </div>
-        <table class="slds-table slds-table_bordered slds-border_left slds-border_right slds-col slds-size_11-of-12">
+        </div> -->
+        <div class="slds-scrollable cardClass" style='height:40rem;width:98%'>
+        <table class="slds-table slds-table_bordered slds-border_left slds-border_right slds-col slds-size_12-of-12">
             <thead>
               <tr class="slds-line-height_reset">
                 <th class="" scope="col">
@@ -28,29 +31,29 @@
               </tr>
             </thead>
             <tbody>
-                <template if:true={loaded}>
-              <template for:each={allData} for:item="row">
-                <tr key={row.Id}>
+              <template if:true={loaded}>
+                <template for:each={allData} for:item="row">
+                  <tr key={row.Id} >
                     <td data-label="Some Custom Column">
                         <div class="slds-truncate">
-                          <p>{row.Name}</p>
+                          <p class={row.color}>{row.Name}</p>
                         </div>
                       </td>
                       <td data-label="Some Custom Column">
                         <div class="slds-truncate">
-                          <p>
+                          <p class={row.color}>
                             {row.Product__r.Product_Name__c}
                         </p>
                         </div>
                       </td>
                       <td data-label="Some Custom Column">
                         <div class="slds-truncate">
-                          <span>${row.Actual_Amount__c}</span>
+                          <span class={row.color}>${row.Actual_Amount__c}</span>
                         </div>
                       </td>
                       <td data-label="Some Custom Column">
                         <div class="slds-truncate">
-                          <span>{row.Prev_Qty__c}</span>
+                          <span class={row.color}>{row.Prev_Qty__c}</span>
                         </div>
                       </td>
                       <td data-label="Some Custom Column">
@@ -59,8 +62,9 @@
                             data-id={row.Id}
                             type="number"
                             variant="label-hidden"
-                            name="inputForDataField"
-                            onchange={handleOnChange}
+                            name={row.Id}
+                            step="0.01"
+                            onchange={handlePercentChange}
                             value={row.Percent_Change__c}>
                           </lightning-input>
                         </div>
@@ -71,20 +75,100 @@
                             data-id={row.Id}
                             type="number"
                             variant="label-hidden"
-                            name="inputForDataField"
-                            onchange={handleOnChange}
-                            value=''>
+                            name={row.Id}
+                            onchange={handleForecast}
+                            step="0.01"
+                            value={row.Qty_Forecast__c}>
                           </lightning-input>
                         </div>
                       </td>
                     </tr>
-              </template>
-            </template>
-            <template if:false={loaded}>
-                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
-            </template>
-            </tbody>
-          </table>
+                  </template>
+                </template>
+                <template if:false={loaded}>
+                  <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                </template>
+              </tbody>
+            </table>
+          </div>
         </div>
+                <!-- Buttons -->
+                <div class='slds-grid slds-m-top_small'>
+                  <span class='slds-col slds-size_2-of-3'></span>
+                  <span class='slds-col slds-size_1-of-3 slds-m-bottom_x-small'>
+                      <div class='slds-float_right slds-m-right_medium'>
+                          <lightning-button variant="success" label="Save" title="save" onclick={handleSave}></lightning-button>
+                      </div>
+                  </span>
+              </div>
+            </div>
+<!-- end of desktop -->
+      </template>
+      <template if:false={formSize}>
+        <div class='slds-scrollable_y cardClass' style='height:40rem; width:100%'>
+          <lightning-layout multiple-rows="true">
+          <template if:true={loaded} for:each={allData} for:item='item'>
+              <lightning-layout-item size="12" key={item.Id} class="slds-box slds-p-around_none 
+              slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none pcCard" 
+                  name={item.Product__r.Product_Name__c}>
+              
+              <div class='slds-grid slds-wrap'>    
+              <div class='slds-col slds-size_1-of-2 slds-m-left_x-small slds-m-top_medium'>
+                  <!-- <h2 class="slds-text-heading_medium slds-m-bottom_medium"></h2> -->
+                      <p>{item.Product__r.Product_Name__c}</p> 
+                      <p class="prodCode slds-p-top_xxx-small">{item.Name}</p>
+              </div>   
+
+          <!-- Prev Sales  -->
+                  <div class='slds-col slds-size_1-of-2 slds-m-left_x-small'>
+                      <lightning-input value={item.Actual_Amount__c} type='number' formater='currency' 
+                                       label='Unit Price' readonly ></lightning-input>
+                      
+          <!-- Prev Qty -->
+                      <lightning-input class="slds-m-bottom_x-small" value={item.Prev_Qty__c} type='number' label='Prev Qty' step="0.01" readonly></lightning-input>
+                  </div>
+                  <!-- <div class='slds-col slds-size_1-of-4'></div> -->
+                  <div class='slds-col slds-size_1-of-3 slds-m-left_x-small'>
+          <!-- Percent Change -->
+                  <lightning-input
+                  data-id={item.Id}
+                  type="number"
+                  name={item.Id}
+                  label="Percent Change"
+                  step="0.01"
+                 
+                  onchange={handlePercentChange}
+                  value={item.Percent_Change__c}>
+                </lightning-input>
+                  
+          <!--forecast #-->
+                  <lightning-input
+                  data-id={item.Id}
+                  type="number"
+                  name={item.Id}
+                  label="Forecasted Qty"
+                  onchange={handleForecast}
+                  step="0.01"
+                  value={item.Qty_Forecast__c}>
+                </lightning-input>
+
+            
+
+                  </div>
+
+              </div>
+              </lightning-layout-item>
+          </template>
+      </lightning-layout>
+      <!--spinner-->
+      <template if:false={loaded}>
+          <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+      </template> 
+      </div>
+      <div class="slds-docked-form-footer">
+        <button type="button" class="slds-button slds-button_brand" onclick={handleSave}>Save</button>
+      </div>
+      </template>
+
     </lightning-card>
 </template>
