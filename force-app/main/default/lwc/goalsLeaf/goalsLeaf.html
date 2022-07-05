@@ -1,19 +1,52 @@
 <template>
-    <!-- taken straight from SLDS -->
-    <th data-label="Name" scope="row">
-      <div class="slds-truncate" title={row.Id}>{row.Id}</div>
-    </th>
-    <td data-label="Some Custom Column">
-      <div class="slds-truncate">
-        <lightning-input
-          data-id={row.Id}
-          type="number"
-          variant="label-hidden"
-          name="inputForDataField"
-          onchange={handleOnChange}
-          value={row.Prev_Qty__c}>
-        </lightning-input>
-      </div>
-    </td>
-    <!-- more tds .... -->
+  <template if:true={loaded}>
+    <template if:true={info}>
+      <lightning-quick-action-panel header="Add Forecast">
+        <div class="slds-grid">
+          <!-- MONTH -->
+          <div class="slds-col slds-size_1-of-3 slds-m-top_xx-small">
+            <label for="slds-select">Month:</label>
+            <select name="month" class="slds-select valAdd" onchange={selectingMonth} required>
+              <template if:true={selMonth}>
+                <option value={selMonth.value}>{selMonth.label}</option>
+              </template>
+              <template if:false={selectMonth}>
+                <option value=""></option>
+              </template>
+              <template for:each={selectMonth} for:item='x'>
+                <option key={x.value} value={x.value}>{x.label}</option>
+              </template>
+            </select>
+          </div>
+          <!-- PRODUCT -->
+          <div class="slds-col slds-size_1-of-3 slds-m-top_xx-small">
+            <label for="ship-selecttwo">Product</label>
+            <select name="address" class="slds-selecttwo valAdd" onchange={selectProduct} required={shipReq}>
+              <template if:true={selProd}>
+                <option value={selProd.value}>{selProd.label}</option>
+              </template>
+              <template if:false={selProd}>
+                <option value=""></option>
+              </template>
+              <template for:each={products} for:item='y'>
+                <option key={y.value} value={y.value}>{y.label}</option>
+              </template>
+            </select>
+          </div>
+          <!-- FORECAST AMOUNT -->
+          <lightning-input label="Qty" value={qty} class="slds-m-bottom_x-small slds-col slds-size_1-of-2 validate" onchange={newQty} required></lightning-input>
+        </div>
+        <div class="slds-grid">
+          <lightning-button-group>
+            <lightning-button label="Cancel" onclick={cancel}></lightning-button>
+            <lightning-button label="Save" onclick={save}></lightning-button>
+            <lightning-button label="Save and New" onclick={saveNew}></lightning-button>
+          </lightning-button-group>
+        </div>
+      </lightning-quick-action-panel>
+    </template>
   </template>
+  <template if:false={loaded}>
+    <lightning-spinner alternative-text="Loading"></lightning-spinner>
+  </template>
+</template>
