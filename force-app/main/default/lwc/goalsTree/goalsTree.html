@@ -1,5 +1,13 @@
 <template>
   <lightning-card  variant="Narrow"  title="MC Forecast" icon-name="standard:account">
+  <template if:true={newGoal}>
+    <c-goals-leaf
+                 rep-id={rep}
+                 rep-title={repName}
+                 oncancel={handleCancel}
+                 onclose={handleClose}></c-goals-leaf>
+    </template>
+    <template if:false={newGoal}>
       <template if:true={formSize}>
         <div class={flexipageRegionWidth}>
                           <!-- Buttons -->
@@ -7,6 +15,7 @@
                             <span class='slds-col slds-size_2-of-3'></span>
                             <span class='slds-col slds-size_1-of-3 slds-m-bottom_x-small'>
                                 <div class='slds-float_right slds-m-right_medium'>
+                                  <lightning-button variant="brand" label="New" title="save" onclick={handleNew}></lightning-button>
                                     <lightning-button variant="success" label="Save" title="save" onclick={handleSave}></lightning-button>
                                 </div>
                             </span>
@@ -51,7 +60,7 @@
                       <td data-label="Some Custom Column">
                         <div class="slds-truncate">
                           <p class={row.color}>
-                            {row.Product__r.Product_Name__c}
+                            {row.Product_Name}
                         </p>
                         </div>
                       </td>
@@ -178,6 +187,7 @@
         <button type="button" class="slds-button slds-button_brand" onclick={handleSave}>Save</button>
       </div>
       </template>
-
+<!-- new goal template close -->
+    </template>
     </lightning-card>
 </template>
