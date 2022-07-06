@@ -25,14 +25,17 @@ export default class GoalsTree extends LightningElement {
         return screen === 'Large'? true : false
     }
     async loadGoals(){
+      console.log('loading')
       let data = await getGoals({userId: this.user})
       console.log(this.allData)
       if (data) {
         this.allData = [...data]
         this.allData = data.map(x=>{
+          console.log(x.Product__r.Product_Name__c)
+          let Product_Name = x.Product__r.Product_Name__c ? x.Product__r.Product_Name__c : 'Rep Entered Other';
           let changed = false;
           let color = x.Month_Name__c === 'August' ? 'red' : 'black'
-          return {...x, changed,color}
+          return {...x,Product_Name, changed,color}
         }); 
         this.handleData(this.allData)
         this.rep = this.allData[0].Sales_Rep__c;
@@ -117,7 +120,14 @@ export default class GoalsTree extends LightningElement {
         )
     })
      }
-
+     handleClose(){
+      console.log('handle close')
+      this.loadGoals();
+      this.newGoal = false; 
+     }
+     handleCancel(){
+       this.newGoal = false; 
+     }
      handleNew(){
       this.newGoal= true; 
      }

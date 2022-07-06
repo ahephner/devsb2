@@ -4,13 +4,10 @@
       <lightning-quick-action-panel header="Add Forecast">
         <div class="slds-grid">
           <!-- MONTH -->
-          <div class="slds-col slds-size_1-of-3 slds-m-top_xx-small">
+          <div class="slds-col slds-size_1-of-4 slds-var-m-around_x-small">
             <label for="slds-select">Month:</label>
             <select name="month" class="slds-select valAdd" onchange={selectingMonth} required>
-              <template if:true={selMonth}>
-                <option value={selMonth.value}>{selMonth.label}</option>
-              </template>
-              <template if:false={selectMonth}>
+              <template if:false={startingMonth}>
                 <option value=""></option>
               </template>
               <template for:each={selectMonth} for:item='x'>
@@ -19,13 +16,10 @@
             </select>
           </div>
           <!-- PRODUCT -->
-          <div class="slds-col slds-size_1-of-3 slds-m-top_xx-small">
-            <label for="ship-selecttwo">Product</label>
-            <select name="address" class="slds-selecttwo valAdd" onchange={selectProduct} required={shipReq}>
-              <template if:true={selProd}>
-                <option value={selProd.value}>{selProd.label}</option>
-              </template>
-              <template if:false={selProd}>
+          <div class="slds-col slds-size_1-of-4 slds-var-m-around_x-small">
+            <label for="selecttwo">Product</label>
+            <select name="address" class="slds-select selecttwo valAdd" onchange={selectProduct} required>
+              <template if:false={startingProd}>
                 <option value=""></option>
               </template>
               <template for:each={products} for:item='y'>
@@ -34,13 +28,13 @@
             </select>
           </div>
           <!-- FORECAST AMOUNT -->
-          <lightning-input label="Qty" value={qty} class="slds-m-bottom_x-small slds-col slds-size_1-of-2 validate" onchange={newQty} required></lightning-input>
+          <lightning-input label="Qty" value={qty} class="slds-var-m-around_x-small slds-col slds-size_1-of-4 valAdd" onchange={newQty} required></lightning-input>
         </div>
         <div class="slds-grid">
           <lightning-button-group>
             <lightning-button label="Cancel" onclick={cancel}></lightning-button>
-            <lightning-button label="Save" onclick={save}></lightning-button>
-            <lightning-button label="Save and New" onclick={saveNew}></lightning-button>
+            <lightning-button label="Save" onclick={handleSingleNew}></lightning-button>
+            <lightning-button label="Save and New" onclick={handleAddMore}></lightning-button>
           </lightning-button-group>
         </div>
       </lightning-quick-action-panel>

@@ -3,7 +3,9 @@
   <template if:true={newGoal}>
     <c-goals-leaf
                  rep-id={rep}
-                 rep-title={repName}></c-goals-leaf>
+                 rep-title={repName}
+                 oncancel={handleCancel}
+                 onclose={handleClose}></c-goals-leaf>
     </template>
     <template if:false={newGoal}>
       <template if:true={formSize}>
@@ -58,7 +60,7 @@
                       <td data-label="Some Custom Column">
                         <div class="slds-truncate">
                           <p class={row.color}>
-                            {row.Product__r.Product_Name__c}
+                            {row.Product_Name}
                         </p>
                         </div>
                       </td>
