@@ -42,3 +42,11 @@
 .prodCode{
     font:small-caption;
 }
+
+.hover{
+ cursor: pointer;   
+}
+
+.line{
+    display: flex;
+}

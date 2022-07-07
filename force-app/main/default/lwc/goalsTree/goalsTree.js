@@ -16,6 +16,8 @@ export default class GoalsTree extends LightningElement {
     newGoal = false; 
     rep;
     repName; 
+    direction = 'asc'
+    hoverIcon = 'utility:chevrondown'
     connectedCallback(){
       this.formSize = this.screenSize(FORM_FACTOR)
       this.loadGoals();
@@ -31,17 +33,19 @@ export default class GoalsTree extends LightningElement {
       if (data) {
         this.allData = [...data]
         this.allData = data.map(x=>{
-          console.log(x.Product__r.Product_Name__c)
+          
           let Product_Name = x.Product__r.Product_Name__c ? x.Product__r.Product_Name__c : 'Rep Entered Other';
           let changed = false;
           let color = x.Month_Name__c === 'August' ? 'red' : 'black'
           return {...x,Product_Name, changed,color}
         }); 
         this.handleData(this.allData)
-        this.rep = this.allData[0].Sales_Rep__c;
-        this.repName = this.allData[0].Sales_Rep__r.Name;  
+        if(this.allData.length>0){
+          this.rep = this.allData[0].Sales_Rep__c;
+          this.repName = this.allData[0].Sales_Rep__r.Name; 
+        }
         this.loaded = true; 
-        console.log(typeof this.allData)
+        
       } else if (!this.allData) {
          console.error('Error:');
       }
@@ -130,5 +134,28 @@ export default class GoalsTree extends LightningElement {
      }
      handleNew(){
       this.newGoal= true; 
+     }
+
+     sort(event){
+      
+      let parseData = JSON.parse(JSON.stringify(this.allData));
+
+          // Return the value stored in the field
+    let keyValue = (a) => {
+      return a['Product_Name'];
+  };
+
+    let isReverse = this.direction === 'asc'? 1:-1
+    this.direction = this.direction === 'asc'? 'desc' : 'asc';
+    this.hoverIcon = this.hoverIcon === 'utility:chevrondown' ? 'utility:chevronup': 'utility:chevrondown'
+    parseData.sort((x, y)=>{
+      x = keyValue(x) ? keyValue(x) : ''; // handling null values
+      y = keyValue(y) ? keyValue(y) : '';
+
+      // sorting values based on direction
+      return isReverse * ((x > y) - (y > x));
+    })
+
+    this.allData = parseData; 
      }
 }
