@@ -1,12 +1,12 @@
 <template>
   <lightning-card  variant="Narrow"  title="MC Forecast" icon-name="standard:account">
-  <template if:true={newGoal}>
+  <!-- <template if:true={newGoal}>
     <c-goals-leaf
                  rep-id={rep}
                  rep-title={repName}
                  oncancel={handleCancel}
                  onclose={handleClose}></c-goals-leaf>
-    </template>
+    </template> -->
     <template if:false={newGoal}>
       <template if:true={formSize}>
         <div class={flexipageRegionWidth}>
@@ -15,7 +15,7 @@
                             <span class='slds-col slds-size_2-of-3'></span>
                             <span class='slds-col slds-size_1-of-3 slds-m-bottom_x-small'>
                                 <div class='slds-float_right slds-m-right_medium'>
-                                  <lightning-button variant="brand" label="New" title="save" onclick={handleNew}></lightning-button>
+                                  <!-- <lightning-button variant="brand" label="New" title="save" onclick={handleNew}></lightning-button> -->
                                     <lightning-button variant="success" label="Save" title="save" onclick={handleSave}></lightning-button>
                                 </div>
                             </span>
@@ -32,7 +32,12 @@
                   <div class="slds-truncate" title="Name">Name</div>
                 </th>
                 <th class="" scope="col">
-                  <div class="slds-truncate" title="Some Custom Column">Product</div>
+                  <div class="line">
+                    <div class="slds-truncate hover" data-id="Product_Name"  onclick={sort} title="Some Custom Column">Product</div>
+                    <lightning-icon icon-name={hoverIcon} size="xx-small" onclick={sort}
+                    class='slds-icon_container_circle slds-m-left_small' 
+                    alternative-text="sort" title="sort"></lightning-icon>
+                  </div>
                 </th>
                 <th class="" scope="col">
                     <div class="slds-truncate" title="Some Custom Column">Prev Sales</div>
