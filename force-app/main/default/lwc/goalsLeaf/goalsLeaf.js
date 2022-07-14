@@ -69,14 +69,39 @@ export default class GoalsLeaf extends LightningElement {
     }
     get products(){
         return [
+            {label: 'ATS 18-2-4 25%XCU 23%AMS w/ARMAMENT & BIOS', value:'a0A41000007TswjEAC'},
+            {label:'ATS 16-0-2 25% XCU 20% AMS W/ZnB - 50LB', value:'a0A2M00000YgxoDUAR'},
             {label:'ATS 22-3-11 50% XCU w/ZN-B' , value:'a0A41000007TsiiEAC'},
             {label:'ATS 22-0-4 w/ZnB 50% XCU' , value:'a0A41000007U27mEAC'},
             {label:'ATS 30-0-4 30% XCU w/ZN-B' , value:'a0A41000007Ts9mEAC'},
             {label:'ATS 25-0-3 25% XCU' , value:'a0A41000007TtnIEAS'},
             {label:'ATS 16-28-12 50% w/ZN-B 30% PSCU' , value:'a0A41000007TsMTEA0'},
-            {label:'ATS 25-0-5 w/ZNB 40% Bio/50%ULTRA-N-220' , value:'a0A4100000GipqcEAB'},
             {label:'ATS 30-0-6 W/ZnB 50% XCU' , value:'a0A41000007TtnLEAS'},
-            {label:'Other', value:'Other'}
+            {label:'ATS 25-0-5 w/ZNB 40% Bio/50%ULTRA-N-220' , value:'a0A4100000GipqcEAB'},
+            {label:'MC 46-0-0 ULTRA-N PRILLED' , value:'a0A4100000GipqWEAR'},
+            {label:'MC 25-0-3 20%XCU' , value:'a0A2M00000WScxvUAD'},
+            {label:'ATS 34-0-4 ALL MINERAL' , value:'a0A41000007TsMREA0'},
+            {label:'MC 46-0-0 PRILLED' , value:'a0A41000007Ts3qEAC'},
+            {label:'MC 25-0-3 50%XCU' , value:'a0A4100000GipbeEAB'},
+            {label:'MC 18-0-3 50% XCU, 50% BIOSOLIDS w/ZnB' , value:'a0A4100000GiposEAB'},
+            {label:'MC 22-0-4 50%XCU - 50LB' , value:'a0A4100000QryZAEAZ'},
+            {label:'MC 20-5-10 50%XCU w/ ZN-B ARMAMENT' , value:'a0A4100000GippiEAB'},
+            {label:'MC 46-0-0 GRANULAR' , value:'a0A4100000GipiZEAR'},
+            {label:'MC 28-0-3 20%PSCU  *NO IRON*' , value:'a0A4100000GipqCEAR'},
+            {label:'MC 32-10-5 75%XCU 25% ULTRA -N W/ZNB' , value:'a0A4100000IVve0EAD'},
+            {label:'MC 22-0-4 50% ULTRA-N' , value:'a0A4100000IVvdlEAD'},
+            {label:'ATS 26-0-6 W/ZnB 33%AS 33%UREA 33%XCU' , value:'a0A41000007Ts3rEAC'},
+            {label:'ATS 24-0-10 50% XCU w/ZNB /220 SGN' , value:'a0A4100000GippjEAB'},
+            {label:'MC 32-0-5 75%XCU 25% ULTRA-N W/ARMAMENT - 50LB' , value:'a0A2M00000YB2QAUA1'},
+            {label:'ATS 25-0-20 50% XCU w/ZNB / 220 SGN' , value:'a0A4100000GipidEAB'},
+            {label:'MC 18-0-3 40% ULTRA-N - 50LB' , value:'a0A4100000O4PavEAF'},
+            {label:'MC 10-0-20 AM W/ZN-B - 50LB' , value:'a0A2M00000VHlR0UAL'},
+            {label:'MC 25-0-3 40% XCU 20% BIOS w/ZnB - 50 LB' , value:'a0A4100000Po8qIEAR'},
+            {label:'MC 25-0-8 50% ULTRA-N - 50LB' , value:'a0A4100000KLfOnEAL'},
+            {label:'MC 19-19-19 AM' , value:'a0A4100000GipUiEAJ'},
+            {label:'4-3-0 NUTRIPEL W/1.5% FE (50LB)' , value:'a0A4100000GipmfEAB'},
+            {label:'MC 26-2-3 70%XCU 35%BIOSOLIDS W/ ZN-B' , value:'a0A4100000Gipq7EAB'}
+
         ]
     }
     handleSingleNew(){
@@ -95,11 +120,12 @@ export default class GoalsLeaf extends LightningElement {
         const recordInput = { apiName: SG_OBJECT.objectApiName, fields };
         createRecord(recordInput)
             .then(goal => {
+                console.log(goal.id)
                 this.loaded = true; 
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
-                        message: 'Account created',
+                        message: 'Forecast created',
                         variant: 'success',
                     }),
                 );

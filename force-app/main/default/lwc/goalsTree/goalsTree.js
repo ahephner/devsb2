@@ -29,7 +29,6 @@ export default class GoalsTree extends LightningElement {
     async loadGoals(){
       console.log('loading')
       let data = await getGoals({userId: this.user})
-      console.log(this.allData)
       if (data) {
         this.allData = [...data]
         this.allData = data.map(x=>{
@@ -45,6 +44,7 @@ export default class GoalsTree extends LightningElement {
           this.repName = this.allData[0].Sales_Rep__r.Name; 
         }
         this.loaded = true; 
+        //console.log(this.allData)
         
       } else if (!this.allData) {
          console.error('Error:');
