@@ -56,7 +56,7 @@
             <tbody>
               <template if:true={loaded}>
                 <template for:each={allData} for:item="row">
-                  <tr key={row.Id} >
+                  <tr key={row.Id} style={row.color} >
                     <td data-label="Some Custom Column">
                         <div class="slds-truncate">
                           <p class={row.color}>{row.Name}</p>
@@ -133,7 +133,7 @@
           <lightning-layout multiple-rows="true">
           <template if:true={loaded} for:each={allData} for:item='item'>
               <lightning-layout-item size="12" key={item.Id} class="slds-box slds-p-around_none 
-              slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none pcCard" 
+              slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none pcCard"  
                   name={item.Product__r.Product_Name__c}>
               
               <div class='slds-grid slds-wrap'>    
