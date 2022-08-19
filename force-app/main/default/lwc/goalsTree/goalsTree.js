@@ -1,6 +1,6 @@
 import { LightningElement, api, track } from 'lwc';
 import userId from '@salesforce/user/Id';
-import getGoals from '@salesforce/apex/forecasts.mc1Forecasts';
+import getGoals from '@salesforce/apex/forecasts.threeLo';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import FORM_FACTOR from '@salesforce/client/formFactor';
@@ -38,18 +38,18 @@ export default class GoalsTree extends LightningElement {
           
           let Product_Name = x.Product__r.Product_Name__c ? x.Product__r.Product_Name__c : 'Rep Entered Other';
           let changed = false;
-          //let color = x.Month_Name__c === 'August' ? 'red' : 'black'
-          let color; 
-          return {...x,Product_Name, changed,color}
-        }); 
+         
+          return {...x,Product_Name, changed}
+        });
+        //different helper functions like sitting back ground color or grouping 
         //this.handleData(this.allData)
-        this.allData = await this.setColors(this.allData); 
+        //this.allData = await this.setColors(this.allData); 
         if(this.allData.length>0){
           this.rep = this.allData[0].Sales_Rep__c;
           this.repName = this.allData[0].Sales_Rep__r.Name; 
         }
         this.loaded = true; 
-        
+        //console.log('new data ' +JSON.stringify(this.allData))
         
         
       } else if (!this.allData) {
@@ -57,12 +57,12 @@ export default class GoalsTree extends LightningElement {
       }
     }
     setColors(data){
-      let bgColor = 'background: rgb(242, 242, 242)';
+      let bgColor = 'background: white';
       
       for(let i=0; i<data.length; i++){
         if(data[i].Product__c != this.prev){
             this.prev = data[i].Product__c;
-            bgColor = bgColor === 'background: rgb(242, 242, 242)' ? 'background: rgb(255, 255, 179)' : 'background: rgb(242, 242, 242)';
+            bgColor = bgColor === 'background: white' ? 'background: rgb(255, 255, 204)' : 'background: white';
         }
         data[i].color = bgColor; 
       }
