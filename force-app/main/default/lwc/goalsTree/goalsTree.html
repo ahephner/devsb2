@@ -1,5 +1,5 @@
 <template>
-  <lightning-card  variant="Narrow"  title="MC Forecast" icon-name="standard:account">
+  <lightning-card  variant="Narrow"  title="3Lo Forecast" icon-name="standard:account">
   <template if:true={newGoal}>
     <c-goals-leaf
                  rep-id={rep}
@@ -24,7 +24,7 @@
         <!-- <div class="slds-col slds-size_1-of-12 edgeColor">
             August
         </div> -->
-        <div class="slds-scrollable cardClass" style='height:40rem;width:98%'>
+        <div class="slds-scrollable cardClass" style='height:25rem;width:98%'>
         <table class="slds-table slds-table_bordered slds-border_left slds-border_right slds-col slds-size_12-of-12">
             <thead>
               <tr class="slds-line-height_reset">
@@ -56,7 +56,8 @@
             <tbody>
               <template if:true={loaded}>
                 <template for:each={allData} for:item="row">
-                  <tr key={row.Id} style={row.color} >
+                  <!-- if color is required <tr key={row.Id} style={row.color} -->
+                  <tr key={row.Id} >
                     <td data-label="Some Custom Column">
                         <div class="slds-truncate">
                           <p class={row.color}>{row.Name}</p>

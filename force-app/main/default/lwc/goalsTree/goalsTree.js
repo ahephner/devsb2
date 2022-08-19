@@ -30,10 +30,10 @@ export default class GoalsTree extends LightningElement {
     async loadGoals(){
       
       let data = await getGoals({userId: this.user})
-      if (data) {
+      if (data.length>0) {
         this.allData = [...data]
         //set for the color of background
-        this.prev = this.allData[0].Product__c;
+        //this.prev = this.allData[0].Product__c;
         this.allData = data.map(x=>{ 
           
           let Product_Name = x.Product__r.Product_Name__c ? x.Product__r.Product_Name__c : 'Rep Entered Other';
@@ -54,6 +54,8 @@ export default class GoalsTree extends LightningElement {
         
       } else if (!this.allData) {
          console.error('Error:');
+      }else{
+        this.loaded = true; 
       }
     }
     setColors(data){
