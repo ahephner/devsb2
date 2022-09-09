@@ -43,13 +43,14 @@
                     <div class="slds-truncate" title="Some Custom Column">Prev Sales</div>
                   </th>
                   <th class="" scope="col">
-                    <div class="slds-truncate" title="Some Custom Column">Prev QTY</div>
+                    <div class="slds-truncate" title="Some Custom Column">Equivalent Qty Sold</div>
+                    <lightning-helptext content="Number of units of equivealent Threesome or Vessal sold in FY22 through 8/18/22"></lightning-helptext>
                   </th>
-                  <th class="" scope="col">
+                  <!-- <th class="" scope="col">
                     <div class="slds-truncate" title="Some Custom Column">% Change</div>
-                  </th>
+                  </th> -->
                   <th class="" scope="col">
-                    <div class="slds-truncate" title="Some Custom Column">New Forecast</div>
+                    <div class="slds-truncate" title="Some Custom Column">Replacement Amount</div>
                   </th>
               </tr>
             </thead>
@@ -80,7 +81,7 @@
                           <span class={row.color}>{row.Prev_Qty__c}</span>
                         </div>
                       </td>
-                      <td data-label="Some Custom Column">
+                      <!-- <td data-label="Some Custom Column">
                         <div class="slds-truncate">
                           <lightning-input
                             data-id={row.Id}
@@ -92,7 +93,7 @@
                             value={row.Percent_Change__c}>
                           </lightning-input>
                         </div>
-                      </td>
+                      </td> -->
                       <td data-label="Some Custom Column">
                         <div class="slds-truncate">
                           <lightning-input
@@ -147,15 +148,18 @@
           <!-- Prev Sales  -->
                   <div class='slds-col slds-size_1-of-2 slds-m-left_x-small'>
                       <lightning-input value={item.Actual_Amount__c} type='number' formater='currency' 
-                                       label='Unit Price' readonly ></lightning-input>
+                                       label='Ext Price' readonly ></lightning-input>
                       
           <!-- Prev Qty -->
-                      <lightning-input class="slds-m-bottom_x-small" value={item.Prev_Qty__c} type='number' label='Prev Qty' step="0.01" readonly></lightning-input>
-                  </div>
+          <div>
+                      <lightning-input class="slds-m-bottom_x-small" value={item.Prev_Qty__c} type='number' label='Equivalent Qty Sold' step="0.01" readonly></lightning-input>
+                      <lightning-helptext content="Number of units of equivealent Threesome or Vessal sold in FY22 through 8/18/22"></lightning-helptext>
+          </div>
+                    </div>
                   <!-- <div class='slds-col slds-size_1-of-4'></div> -->
                   <div class='slds-col slds-size_1-of-3 slds-m-left_x-small'>
           <!-- Percent Change -->
-                  <lightning-input
+                  <!-- <lightning-input
                   data-id={item.Id}
                   type="number"
                   name={item.Id}
@@ -164,14 +168,14 @@
                  
                   onchange={handlePercentChange}
                   value={item.Percent_Change__c}>
-                </lightning-input>
+                </lightning-input> -->
                   
           <!--forecast #-->
                   <lightning-input
                   data-id={item.Id}
                   type="number"
                   name={item.Id}
-                  label="Forecasted Qty"
+                  label="Replacement Amount"
                   onchange={handleForecast}
                   step="0.01"
                   value={item.Qty_Forecast__c}>

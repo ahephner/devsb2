@@ -1,0 +1,15 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Example">
+        <div>
+            <div class="countBox">
+                <h4>Count: {count}</h4>
+            </div>
+            <div class="butBox">
+                <lightning-button-group>
+                    <lightning-button-icon variant="base" size="small" icon-name="utility:dash" alternative-text="subtract" onclick={handleMinus}></lightning-button-icon>
+                    <lightning-button-icon variant="base" size="small" icon-name="utility:add" alternative-text="add" onclick={handleAdd}></lightning-button-icon>
+                </lightning-button-group>
+            </div>
+        </div>
+    </lightning-card>
+</template>
