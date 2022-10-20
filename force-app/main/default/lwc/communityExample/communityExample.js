@@ -8,6 +8,9 @@ export default class CommunityExample extends LightningElement {
     }
 
     handleMinus(){
-        this.count --; 
+        if(this.count > 0){
+            this.count --; 
+        }
     }
 }
+
