@@ -12,6 +12,8 @@
             <property name="userId" label='userId' type="String"/>
             <property name='profileId' type="String" label='profileId'/>
             <property name='profileName' type="String" label='profileName'/>
+            <property name='permName' type="String" label='permName'/>
+            <property name='permId' type="String" label='permId'/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

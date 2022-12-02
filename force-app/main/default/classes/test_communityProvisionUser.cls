@@ -26,6 +26,32 @@ public class test_communitProvisionUser {
     @isTest
     static void testcommunityWrapper(){
         id conId = [select id from contact where lastname = 'Test'].id;
+        id proId = [SELECT Id FROM Profile WHERE Name = 'Customer - ATS Connect / B2B Commerce Buyer'].id;
+		id permId = [SELECT Id from PermissionSet WHERE Name = 'B2B_Buyer_No_PSL'].Id;
+        
+        communityWrapper x = new communityWrapper();
+        	x.fName = 'test';
+        	x.lName = 'lname';
+        	x.email = 'tl@test.com';
+        	x.uName = 'tl@test.com';
+        	x.company = 'company';
+        	x.phone = '5555555555';
+        	x.alias = 'tLname';
+        	x.nickname = 'nickname';
+        	x.profileId = proId;
+        	x.contactId = conId; 
+       
+        test.startTest();
+        	string cu = communityProvisionUser.insertUser(x, permId);
+        test.stopTest();
+        system.assertEquals('Success', cu); 
+        
+    }
+    
+    
+    @isTest
+    static void test_connectWrapper(){
+        id conId = [select id from contact where lastname = 'Test'].id;
         id proId = [SELECT Id FROM Profile WHERE Name = 'ATS Connect - Customer Community Login User'].id;
         
         communityWrapper x = new communityWrapper();
@@ -41,7 +67,7 @@ public class test_communitProvisionUser {
         	x.contactId = conId; 
        
         test.startTest();
-        	string cu = communityProvisionUser.insertUser(x);
+        	string cu = communityProvisionUser.insertCommunityUser(x);
         test.stopTest();
         system.assertEquals('Success', cu); 
         

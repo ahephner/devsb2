@@ -1,6 +1,7 @@
 import { LightningElement, api, wire } from 'lwc';
 import getContact from '@salesforce/apex/communityProvisionUser.getContact'; 
 import insertUser from '@salesforce/apex/communityProvisionUser.insertUser';
+import insertCommunityUser from '@salesforce/apex/communityProvisionUser.insertCommunityUser'; 
 import { FlowNavigationBackEvent, FlowNavigationNextEvent } from 'lightning/flowSupport';
 //import USER_OBJ from '@salesforce/schema/User';
 // import FIRST_NAME from '@salesforce/schema/User.FirstName';
@@ -20,6 +21,8 @@ export default class UserProvision extends LightningElement {
     @api userId;
     @api profileId
     @api profileName
+    @api permName;
+    @api permId; 
     error
     contact; 
     //userObj = USER_OBJ; 
@@ -85,44 +88,93 @@ export default class UserProvision extends LightningElement {
             alert('Email and UserName Required');
             return; 
         }
-        this.loaded = false; 
-        let params ={
-            fName : this.firstName,
-            lName: this.lastName,
-            email: this.email,
-            uName : this.userName,
-            company: this.company,
-            phone: this.phone,
-            alias: this.alias,
-            nickname: this.nickName,
-            profileId : this.profileId,
-            contactId: this.contactId
-        }
-        
-        insertUser({wrapper:params})
-            .then((resp)=>{
-                if(resp === 'Success'){
-                    const next = FlowNavigationNextEvent();
-                    this.dispatchEvent(next); 
-                    this.loaded = true; 
-                }else if(resp != 'Success'){
-                    this.errorMessage = resp;
-                    this.loaded = true; 
-                }
 
-            }).catch((error)=>{
-                console.log(JSON.stringify(error))
-                let message = 'Unknown error';
-                if (Array.isArray(error.body)) {
-                    message = error.body.map(e => e.message).join(', ');
-                    this.errorMessage = message; 
-                } else if (typeof error.body.message === 'string') {
-                    message = error.body.message;
-                    this.errorMessage = message; 
-                }
-         })
+        if(this.permName === 'B2B_Buyer_No_PSL'){
+            this.createBuyer();
+        }else{
+            this.createComUser();
+        }
+    }
+
+        createBuyer(){
+            
+            this.loaded = false; 
+            let params ={
+                fName : this.firstName,
+                lName: this.lastName,
+                email: this.email,
+                uName : this.userName,
+                company: this.company,
+                phone: this.phone,
+                alias: this.alias,
+                nickname: this.nickName,
+                profileId : this.profileId,
+                contactId: this.contactId
+            }
+            
+            insertUser({wrapper:params, permsetId: this.permId})
+                .then((resp)=>{
+                    console.log('back -->' , resp); 
+                    if(resp === 'Success'){
+                        const next = FlowNavigationNextEvent();
+                        this.dispatchEvent(next); 
+                        this.loaded = true; 
+                    }else if(resp != 'Success'){
+                        this.errorMessage = resp;
+                        this.loaded = true; 
+                    }
+    
+                }).catch((error)=>{
+                    console.log(JSON.stringify(error))
+                    let message = 'Unknown error';
+                    if (Array.isArray(error.body)) {
+                        message = error.body.map(e => e.message).join(', ');
+                        this.errorMessage = message; 
+                    } else if (typeof error.body.message === 'string') {
+                        message = error.body.message;
+                        this.errorMessage = message; 
+                    }
+             })
         }
 
+        createComUser(){
+            this.loaded = false; 
+            let params ={
+                fName : this.firstName,
+                lName: this.lastName,
+                email: this.email,
+                uName : this.userName,
+                company: this.company,
+                phone: this.phone,
+                alias: this.alias,
+                nickname: this.nickName,
+                profileId : this.profileId,
+                contactId: this.contactId
+            }
+            
+            insertUser({wrapper:params})
+                .then((resp)=>{
+                    if(resp === 'Success'){
+                        const next = FlowNavigationNextEvent();
+                        this.dispatchEvent(next); 
+                        this.loaded = true; 
+                    }else if(resp != 'Success'){
+                        this.errorMessage = resp;
+                        this.loaded = true; 
+                    }
+
+                }).catch((error)=>{
+                    console.log(JSON.stringify(error))
+                    let message = 'Unknown error';
+                    if (Array.isArray(error.body)) {
+                        message = error.body.map(e => e.message).join(', ');
+                        this.errorMessage = message; 
+                    } else if (typeof error.body.message === 'string') {
+                        message = error.body.message;
+                        this.errorMessage = message; 
+                    }
+            })
+        }
         back(){
             const backNav = FlowNavigationBackEvent();
             this.dispatchEvent(backNav);
