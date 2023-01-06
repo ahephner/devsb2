@@ -90,8 +90,10 @@ export default class UserProvision extends LightningElement {
         }
 
         if(this.permName === 'B2B_Buyer_No_PSL'){
+            console.log('running buyer');
             this.createBuyer();
         }else{
+            console.log('running community');
             this.createComUser();
         }
     }
@@ -152,7 +154,7 @@ export default class UserProvision extends LightningElement {
                 contactId: this.contactId
             }
             
-            insertUser({wrapper:params})
+            insertCommunityUser({wrapper:params})
                 .then((resp)=>{
                     if(resp === 'Success'){
                         const next = FlowNavigationNextEvent();
